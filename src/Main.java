@@ -17,7 +17,7 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         try {
-            jda = JDABuilder.createDefault("OTEzODU4MjAyODg4NzI0NTUx.YaEmxg.5LnjK5UxSoqBlgnmT188xZqV-9U").build();
+            jda = JDABuilder.createDefault(new GetMyToken().GetMyTokenBack()).build();
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Probably no Bot available!");
@@ -28,7 +28,7 @@ public class Main {
         jda.addEventListener(new Commands());
 
         TimeUnit.SECONDS.sleep(5);
-        while (brunner == true) {
+        while (brunner) {
             t = LocalTime.now();
             System.out.println("Starting work! - " + t);
             System.out.println(jda.getGuildById(911597065505738772L).getMemberCount());
