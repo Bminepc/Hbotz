@@ -5,6 +5,7 @@ import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.hooks.InterfacedEventManager;
 
 //Version 1.0
 //Date: 26.11.2021
@@ -17,7 +18,9 @@ public class Main {
 
     public static void main(String[] args) throws InterruptedException {
         try {
-            jda = JDABuilder.createDefault(new GetMyToken().GetMyTokenBack()).build();
+            String token = new GetMyToken().GetMyTokenBack();
+            jda = JDABuilder.createDefault(token).build();
+            jda.setEventManager(new InterfacedEventManager());
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("Probably no Bot available!");
@@ -28,7 +31,7 @@ public class Main {
         jda.addEventListener(new Commands());
 
         TimeUnit.SECONDS.sleep(5);
-        while (brunner) {
+        /*while (brunner) {
             t = LocalTime.now();
             System.out.println("Starting work! - " + t);
             System.out.println(jda.getGuildById(911597065505738772L).getMemberCount());
@@ -41,5 +44,7 @@ public class Main {
         System.out.println("Bot stoped");
         jda.getPresence().setStatus(OnlineStatus.OFFLINE);
         return;
+
+         */
     }
 }

@@ -1,7 +1,20 @@
+import groovy.console.ui.Console;
+import net.dv8tion.jda.api.events.ReadyEvent;
+import net.dv8tion.jda.api.events.guild.GuildJoinEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberJoinEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberLeaveEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberRemoveEvent;
+import net.dv8tion.jda.api.events.guild.member.GuildMemberUpdateEvent;
 import net.dv8tion.jda.api.events.message.MessageReceivedEvent;
 import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import org.jetbrains.annotations.NotNull;
 
 public class Commands extends ListenerAdapter {
+
+    @Override
+    public void onReady(@NotNull ReadyEvent event) {
+        super.onReady(event);
+    }
 
     @Override
     public void onMessageReceived(MessageReceivedEvent event) {
@@ -29,5 +42,24 @@ public class Commands extends ListenerAdapter {
             System.out.println("Stoping Bot in next Cycle!");
         }
         System.out.println("-------------------");
+    }
+
+    @Override
+    public void onGuildMemberRemove(@NotNull GuildMemberRemoveEvent event) {
+        //super.onGuildMemberRemove(event);
+        System.out.println("Leave");
+        event.getGuild().getVoiceChannelById(911756528913113100L).getManager().setName("Member Count: " + event.getGuild().getMemberCount()).queue();
+    }
+
+    @Override
+    public void onGuildMemberUpdate(@NotNull GuildMemberUpdateEvent event) {
+        super.onGuildMemberUpdate(event);
+    }
+
+    @Override
+    public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
+        super.onGuildMemberJoin(event);
+        System.out.println("Join");
+        event.getGuild().getVoiceChannelById(911756528913113100L).getManager().setName("Member Count: " + event.getGuild().getMemberCount()).queue();
     }
 }

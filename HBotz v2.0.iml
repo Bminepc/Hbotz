@@ -8,6 +8,6 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="groovy-4.0.0-beta-1" level="project" />
-    <orderEntry type="library" name="JDA-4.3.0_348" level="project" />
+    <orderEntry type="library" name="JDA-4.3.0_348-withDependencies" level="project" />
   </component>
 </module>
