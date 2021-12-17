@@ -1,25 +1,35 @@
 import java.time.LocalTime;
+import java.util.List;
+import java.util.Objects;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.concurrent.TimeUnit;
 
 import net.dv8tion.jda.api.JDA;
 import net.dv8tion.jda.api.JDABuilder;
 import net.dv8tion.jda.api.OnlineStatus;
 import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.entities.Guild;
+import net.dv8tion.jda.api.entities.GuildChannel;
+import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.hooks.InterfacedEventManager;
+import net.dv8tion.jda.api.requests.GatewayIntent;
 
 //Version 1.0
 //Date: 26.11.2021
 
 public class Main {
     public static JDA jda;
-    public static String prefix = "!";
-    public static Boolean brunner = true;
-    public static LocalTime t;
+    //public static String prefix = "!"; //No longer used
+    public static Boolean bRunner = true;
+    //public static LocalTime t; //No longer used
 
     public static void main(String[] args) throws InterruptedException {
         try {
             String token = new GetMyToken().GetMyTokenBack();
-            jda = JDABuilder.createDefault(token).build();
+            JDABuilder b = JDABuilder.createDefault(token);
+            b.enableIntents(GatewayIntent.GUILD_MEMBERS);
+            jda = b.build();
             jda.setEventManager(new InterfacedEventManager());
         } catch (Exception e) {
             e.printStackTrace();
@@ -30,7 +40,32 @@ public class Main {
         // jda.getGuildChannelById("HBz Mod-Team Discord");
         jda.addEventListener(new Commands());
 
-        TimeUnit.SECONDS.sleep(5);
+        TimerTask timerTask = new TimerTask() {
+            public void run() {
+                System.out.println("Timer");
+                Guild server = jda.getGuildById(911597065505738772L);
+                List<GuildChannel> l = server.getChannels();
+                server.loadMembers();
+                List<Member> m = server.getMembers();
+                System.out.println(m.size());
+                System.out.println(server.getName());
+                System.out.println(server.getMemberCount());
+                //System.out.println(jda.getGuildById(911597065505738772L).getMemberById(682980754447400970L).getNickname());
+                //System.out.println(jda.getGuildById(911597065505738772L).getMemberCount());
+                jda.getGuildById(911597065505738772L).getVoiceChannelById(911756528913113100L).getManager().setName("Member Count: " + jda.getGuildById(911597065505738772L).getMemberCount()).queue();
+            }
+        };
+        Timer timer = new Timer();
+        //600000
+        timer.schedule(timerTask,3000, (long) (1 * 3.6*1000000));
+        while (bRunner){
+
+        }
+        System.out.println("Bot stopped");
+        jda.getPresence().setStatus(OnlineStatus.OFFLINE);
+        System.exit(1);
+
+        //TimeUnit.SECONDS.sleep(5);
         /*while (brunner) {
             t = LocalTime.now();
             System.out.println("Starting work! - " + t);
@@ -41,7 +76,7 @@ public class Main {
             // jda.getGuildById(907049183142350909L).getTextChannelById(913851816834392135L).getManager().setName("Test:
             // ").queue();
         }
-        System.out.println("Bot stoped");
+        System.out.println("Bot stopped");
         jda.getPresence().setStatus(OnlineStatus.OFFLINE);
         return;
 

@@ -38,7 +38,7 @@ public class Commands extends ListenerAdapter {
             //event.getGuild().getTextChannelById(event.getChannel().getId()).getManager().setName("Nutzer_im_DC: " + event.getGuild().getMemberCount()).queue();
 
         }else if(args.equals("stophbotz") && 911769123065831467L == Long.parseLong(event.getChannel().getId())) { //Chanel auf dem Main 911769123065831467 Chanel auf dem Test 907049183586955277
-            Main.brunner = false;
+            Main.bRunner = false;
             System.out.println("Stoping Bot in next Cycle!");
         }
         System.out.println("-------------------");
@@ -60,6 +60,7 @@ public class Commands extends ListenerAdapter {
     public void onGuildMemberJoin(@NotNull GuildMemberJoinEvent event) {
         super.onGuildMemberJoin(event);
         System.out.println("Join");
+        System.out.println(event.getGuild().getMemberCount());
         event.getGuild().getVoiceChannelById(911756528913113100L).getManager().setName("Member Count: " + event.getGuild().getMemberCount()).queue();
     }
 }
