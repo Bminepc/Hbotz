@@ -15,7 +15,7 @@ import net.dv8tion.jda.api.entities.Member;
 import net.dv8tion.jda.api.hooks.InterfacedEventManager;
 import net.dv8tion.jda.api.requests.GatewayIntent;
 
-//Version 1.0
+//Version 2.0
 //Date: 26.11.2021
 
 public class Main {
@@ -23,6 +23,8 @@ public class Main {
     //public static String prefix = "!"; //No longer used
     public static Boolean bRunner = true;
     //public static LocalTime t; //No longer used
+
+    private static Boolean botOffSaid = false;
 
     public static void main(String[] args) throws InterruptedException {
         try {
@@ -50,6 +52,23 @@ public class Main {
                 System.out.println(m.size());
                 System.out.println(server.getName());
                 System.out.println(server.getMemberCount());
+
+                //New
+                try {
+                    Member musicbot = server.getMemberById(676156711958216725L);
+                    musicbot.getVoiceState();
+                    botOffSaid = false;
+                }catch (Exception e){
+                    System.out.println(e);
+                    System.out.println("None detected!");
+                    if (!botOffSaid){
+                        jda.getGuildById(911597065505738772L).getTextChannelById(911769123065831467L).sendMessage("Der Musikbot ist offline! <@&911597830924292116>").queue();
+                        botOffSaid = true;
+                    }
+                    //jda.getGuildById(911597065505738772L).getTextChannelById(911769123065831467L).sendMessage("&stream 912090816883859489 ilovebass").queue();
+                }
+                //New
+
                 //System.out.println(jda.getGuildById(911597065505738772L).getMemberById(682980754447400970L).getNickname());
                 //System.out.println(jda.getGuildById(911597065505738772L).getMemberCount());
                 jda.getGuildById(911597065505738772L).getVoiceChannelById(911756528913113100L).getManager().setName("Member Count: " + jda.getGuildById(911597065505738772L).getMemberCount()).queue();
@@ -57,7 +76,7 @@ public class Main {
         };
         Timer timer = new Timer();
         //600000
-        timer.schedule(timerTask,3000, (long) (1 * 3.6*1000000));
+        timer.schedule(timerTask,3000, (long) (600000));
         while (bRunner){
 
         }
